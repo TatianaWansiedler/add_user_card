@@ -1,18 +1,22 @@
-import React, {useState} from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux'
 import s from './style.module.css'
 
-const AddUsersForm = ({addUser}) => {
-    const [name, setName] = useState('')
-    const [gender, setGender] = useState('')
-    const [image, setImage] = useState('')
+const AddUsersForm = () => {
 
+    const dispatch = useDispatch()
     const onSubmit = (e) => {
         e.preventDefault()
-        const newUser = { name, gender, image }
-        addUser(newUser)
-        setName('')
-        setImage('')
-        setGender('')
+        const  { name, gender, image } = e.target
+
+        const newUser = {  
+            id: Date.now(),  
+            name: name.value, 
+            gender: gender.value, 
+            image: image.value 
+        }
+        dispatch({ type: 'ADD', payload: newUser })
+
     }
     return (
         <div className={s.form_container}>
@@ -20,23 +24,20 @@ const AddUsersForm = ({addUser}) => {
                 <input 
                     className={s.input_text}
                     type="text" 
-                    value={name} 
+                    name='name' 
                     placeholder='Name'
-                    onChange={e => setName(e.target.value)}
                     required
                 />
                 <input 
                     className={s.input_text}
                     type="text" 
-                    value={image} 
+                    name='image' 
                     placeholder='Image link'
-                    onChange={e => setImage(e.target.value)}
                     required
                 />
                 <select
                     className={s.input_text} 
-                    value={gender} 
-                    onChange={e => setGender(e.target.value)}
+                    name='gender'
                     required
                 >
                     <option value="">Gender</option>
