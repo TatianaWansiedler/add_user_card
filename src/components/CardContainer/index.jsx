@@ -1,13 +1,9 @@
-import { useSelector } from 'react-redux';
+
 import React from 'react';
 import Card from '../Card';
 import s from './style.module.css'
 
-const CardContainer = ({title, target}) => {
-
-    const users = useSelector(state => state)
-
-    const filteredUsers = users.filter(({gender}) => gender === target)
+const CardContainer = ({title, filteredUsers}) => {
     return (
         <div className={s.container}>
             <h5 className={s.title}>{title}</h5>
